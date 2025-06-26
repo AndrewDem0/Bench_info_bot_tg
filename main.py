@@ -4,8 +4,9 @@ from typing import Final
 from telegram import Update
 from telegram.ext import Application,CommandHandler,MessageHandler,filters,ContextTypes
 
-Token: Final = '8001224395:AAExDp5fE5xNrN86ekHaEH5ywqYFFp38o3Y'
-Bot_username: Final = '@Bench_info_bot'
+load_dotenv()
+Token: Final = os.getenv('TOKEN')
+Bot_username: Final = os.getenv('BOT_USERNAME')
 
 # Commands
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):

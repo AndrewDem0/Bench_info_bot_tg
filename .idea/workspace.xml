@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="22e4dead-2d08-4f41-bd61-9d04144d0f4d" name="Changes" comment="first try creating tg bot" />
+    <list default="true" id="22e4dead-2d08-4f41-bd61-9d04144d0f4d" name="Changes" comment="first try creating tg bot">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,6 +23,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "AndrewDem0"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/AndrewDem0/Bench_info_bot_tg.git",
+    "accountId": "26870675-8818-45d4-9ee9-4fccaf21f18f"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -62,7 +77,7 @@
       <workItem from="1750925887625" duration="6069000" />
       <workItem from="1750932705877" duration="762000" />
       <workItem from="1750940306047" duration="962000" />
-      <workItem from="1750942065736" duration="1303000" />
+      <workItem from="1750942065736" duration="3508000" />
     </task>
     <task id="LOCAL-00001" summary="first try creating tg bot">
       <option name="closed" value="true" />
@@ -88,7 +103,15 @@
       <option name="project" value="LOCAL" />
       <updated>1750943351268</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="first try creating tg bot">
+      <option name="closed" value="true" />
+      <created>1750943417038</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1750943417038</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -99,6 +122,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="first try creating tg bot" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Tg_bot$main.coverage" NAME="main Coverage Results" MODIFIED="1750932707368" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Tg_bot$main.coverage" NAME="main Coverage Results" MODIFIED="1750944368296" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
