@@ -3,13 +3,32 @@ import config
 from dotenv import load_dotenv
 from typing import Final
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes, CallbackQueryHandler
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton
 
 load_dotenv()
 Token: Final = os.getenv('TOKEN')
 Bot_username: Final = os.getenv('BOT_USERNAME')
 
 # Commands
+async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user = update.message.from_user
+    print(f'New chat started by user: ({user.id}, @{user.username})')
+    
+    keyboard = [
+        [KeyboardButton("📖 Історія створення лавки")],
+        [KeyboardButton("💬 Зв'язатися з розробником")],
+        [KeyboardButton("🌐 Громадська активність")]
+        ]
+    reply_markup = ReplyKeyboardMarkup(keyboard, resize_keyboard = True)
+
+    await update.message.reply_text(
+        "Привіт! 👋 Натисни кнопку нижче, щоб почати:",
+        reply_markup = reply_markup
+    )
+#
+async def custom_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text('Кастомна команда')
+#
 async def history_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [[
         InlineKeyboardButton("📄 PDF", callback_data="show_pdf"),
@@ -21,47 +40,43 @@ async def history_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         'Оберіть формат історії:',
         reply_markup = reply_markup
     )
-#
-async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text('Привіт, Я поки не маю функціоналу і знаходжусь на стадії розробки, буду готовий за декілька днів :)')
-#
-async def custom_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text('Кастомна команда')
 
 # Responses
-
-
 def handle_response(text: str) -> str:
     processed: str = text.lower()
 
-    if 'телеграм' in processed:
-        return 'бот'
+    if "💬 зв'язатися з розробником" in processed:
+        return "Шукайте за тегом👇\n" + "@F4076 "
+    elif '🌐 громадська активність' in processed:
+        return "Переходьте за посиланням👇\n"+"https://t.me/teremkyppua"
     
-    elif 'r2' in processed:
-        return 'd2'
-
-    return 'Я поки не розумію тебе'
+    return 'Оберіть опцію з меню'
 
 
-#
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user = update.message.from_user
     message_type: str = update.message.chat.type
-    text : str = update.message.text
+    text: str = update.message.text
 
     print(f'User: ({user.id}, @{user.username}) in {message_type}: "{text}"')
 
+    response = None  # <-- важливо!
+
     if message_type == 'group':
         if Bot_username in text:
-            new_text : str = text.replace(Bot_username, '').strip()
-            response : str = handle_response(new_text)
+            new_text: str = text.replace(Bot_username, '').strip()
+            response = handle_response(new_text)
         else:
             return
+    elif text == "📖 Історія створення лавки":
+        await history_command(update, context)
     else:
-        response : str = handle_response(text)
+        response = handle_response(text)
 
-    print('Bot: ', response)
-    await update.message.reply_text(response)
+    if response:
+        print('Bot: ', response)
+        await update.message.reply_text(response)
+
 #
 async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
@@ -69,11 +84,13 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.answer()
     
     if query.data == "show_pdf":
+        await query.message.delete()
         with open(config.PDF_PATH, "rb") as f:
-            await query.message.reply_document(document = f, caption = "Ось твоя історія у форматі PDF")
+            await query.message.reply_document(document = f, caption = "Ось історія у форматі PDF👆\n")
 
     elif query.data == "show_youtube":
-        await query.message.reply_text(config.YOUTUBE_LINK)
+        await query.message.delete()
+        await query.message.reply_text("Ось історія у форматі YouTube👇\n\n" + config.YOUTUBE_LINK)
     
     user = query.from_user
     chat = query.message.chat
@@ -96,7 +113,7 @@ if __name__ == '__main__':
     app.add_handler(CommandHandler('history', history_command))
 
     # Messages
-    app.add_handler(MessageHandler(filters.TEXT,handle_message))
+    app.add_handler(MessageHandler(filters.TEXT, handle_message))
     app.add_handler(CallbackQueryHandler(button_callback))
     # Errors
     app.add_error_handler(error)
