@@ -2,7 +2,11 @@
     "users": {
         "F4076": {
             "total": 40,
-            "weekly": 1
+            "weekly": 0
+        },
+        "TNNchik": {
+            "total": 5,
+            "weekly": 4
         }
     }
 }
