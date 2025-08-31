@@ -148,20 +148,25 @@ async def handle_admin_password(update: Update, context: ContextTypes.DEFAULT_TY
     
     if hashed_input == config.ADMIN_PASSWORD_HASH:
         authorized_admins.add(user.id)
-        await show_admin_menu(update)
+        await show_admin_menu(update.message.chat, context)
     else:
         await update.message.reply_text("Невірний пароль ❌")
     
     admin_waiting_users.remove(user.id)
 #
-async def show_admin_menu(update: Update):
+async def show_admin_menu(chat, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
         [InlineKeyboardButton("📊 Відвідуваність", callback_data="admin_stats")],
         [InlineKeyboardButton("🗑 Очистити тиждень", callback_data="admin_reset_weekly")],
         [InlineKeyboardButton("❌ Вийти", callback_data="admin_logout")]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    await update.message.reply_text("Адмін-панель:", reply_markup = reply_markup)
+
+    await context.bot.send_message(
+        chat_id=chat.id,
+        text="Адмін-панель:",
+        reply_markup=reply_markup
+    )
 #
 async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
@@ -173,20 +178,19 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if query.data == "admin_stats":
             stats_text = stats_manager.get_all_stats_text()
             await query.message.reply_text(stats_text)
-            await show_admin_menu(query.message)
+            #await show_admin_menu(query.message.chat, context)
             return
-        
+
         elif query.data == "admin_reset_weekly":
             stats_manager.reset_weekly()
             await query.message.reply_text("Тижневі дані очищено ✅")
-            await show_admin_menu(query.message)
+            #await show_admin_menu(query.message.chat, context)
             return
-        
+
         elif query.data == "admin_logout":
             authorized_admins.remove(user.id)
             await query.message.reply_text("Ви вийшли з адмін-панелі ❌")
-            return await history_command(update, context)
-
+            return
     
     if query.data == "show_pdf":
         await query.message.delete()
