@@ -4,3 +4,4 @@ __pycache__/
 .venv
 .gitignore
 models/db.json
+.bot mini
